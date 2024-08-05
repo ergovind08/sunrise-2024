@@ -1,0 +1,30 @@
+.main {
+    padding: 20px;
+  }
+  
+  .createButton {
+    margin-bottom: 20px;
+  }
+  
+  .columnTitle {
+    margin-bottom: 16px;
+    font-weight: bold;
+  }
+  
+  .modal {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+  }
+  
+  .actionButton {
+    margin-top: 20px;
+  }
+  
