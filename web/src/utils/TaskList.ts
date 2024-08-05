@@ -1,3 +1,5 @@
+
+
 import Task from '../model/Task';
 
 export const initialTasks: Task[] = [
@@ -9,6 +11,6 @@ export const initialTasks: Task[] = [
   new Task(6, 'JavaScript Project', 'Create a small JavaScript project.', 'Intern', 3),
   new Task(7, 'API Introduction', 'Learn about RESTful APIs.', 'Intern', 4),
   new Task(8, 'API Consumption', 'Consume an API in a project.', 'Intern', 4),
-  new Task(9, 'Final Project', 'Complete the final project.', 'Intern', 4),
-  new Task(10, 'Project Presentation', 'Present the final project.', 'Intern', 4),
+  new Task(9, 'Final Project', 'Complete the final project.', 'Intern', 5),
+  new Task(10, 'Project Presentation', 'Present the final project.', 'Intern', 5),
 ];
