@@ -1,6 +1,4 @@
 //TaskManager.ts
-
-
 import Task from "@/model/Task";
 import { initialTasks } from "@/utils/TaskList";
 

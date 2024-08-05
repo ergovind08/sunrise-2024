@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Task from '@/model/Task';
 import {
     Card,
-    CardDescription,
-    CardTitle,
-} from "@/components/ui/card";
-import { Button } from './ui/button';
+    CardContent,
+    CardActions,
+    Typography,
+    Box,
+    Button,
+    Grid,
+} from '@mui/material';
 import { IoMdCheckmark } from "react-icons/io";
-
-
 
 const TaskList: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -49,7 +50,6 @@ const TaskList: React.FC = () => {
                     )
                 );
                 updateCurrentGroup(tasks);
-                console.log(tasks)
             })
             .catch((error) => setError(error.message));
     };
@@ -72,118 +72,92 @@ const TaskList: React.FC = () => {
 
     const incompleteTasks = tasks.filter((task) => !task.completed);
     const completedTasks = tasks.filter((task) => task.completed);
-    // Filter tasks based on completion status and current group
     const filteredTasks = tasks.filter(
         (task) => !task.completed && task.group === currentGroup
     );
-    console.log(filteredTasks.length);
-
-
-
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <Typography color="error">Error: {error}</Typography>;
     }
 
     return (
-        <div className='w-full justify-evenly flex mt-4 pb-[2rem]'>
-
+        <Box display="flex" justifyContent="space-evenly" mt={4} pb={8}>
             {/* Pending tasks */}
-            <div className='w-[30%] px-4'>
-                <h1 className='font-bold flex items-center gap-2 mb-4'>
-                    To-Do <span className='w-[20px] h-[20px] text-center bg-gray-300 rounded-full text-[12px] p-[1px] text-gray-600'>{incompleteTasks.length}</span>
-                </h1>
+            <Box width="30%" px={2}>
+                <Typography variant="h5" gutterBottom>
+                    To-Do <span style={{ padding: '2px 8px', borderRadius: '12px', backgroundColor: '#cfd8dc' }}>{incompleteTasks.length}</span>
+                </Typography>
                 {incompleteTasks.length > 0 ? (
-                    <div className='flex flex-col gap-4'>
-                        <ul className='flex flex-col flex-wrap gap-4'>
-                            {incompleteTasks.map((task) => (
-                                <li key={task.id}>
-                                    <Card className='w-full bg-white'>
-                                        <div className='flex justify-between items-center border py-2 px-4'>
-                                            <div className='text-lg font-bold'>Task {task.id}</div>
-                                            <Button
-                                                disabled={!task.completed}
-                                                className='disabled:bg-gray-300 border flex gap-2 items-center'
-                                            >
-                                                <IoMdCheckmark /> Done
-                                            </Button>
-                                        </div>
-                                        <div className='flex flex-col gap-2 p-4'>
-                                            <CardTitle className='text-lg font-semibold'>{task.title}</CardTitle>
-                                            <CardDescription className='text-sm font-normal text-gray-500'>{task.description}</CardDescription>
-                                        </div>
-                                    </Card>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ) : (
-                    null
-                )}
-            </div>
+                    <Grid container spacing={2}>
+                        {incompleteTasks.map((task) => (
+                            <Grid item xs={6} key={task.id}>
+                                <Card elevation={3}>
+                                    <CardContent>
+                                        <Typography variant="h6">Task {task.id}</Typography>
+                                        <Typography variant="body2" color="textSecondary">{task.title}</Typography>
+                                        <Typography variant="body2" color="textSecondary">{task.description}</Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button disabled={task.completed}  startIcon={<IoMdCheckmark />} >
+                                            Done
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                ) : null}
+            </Box>
 
-            {/* In process task */}
-            <div className='w-[30%] px-4'>
-                <h1 className='font-bold flex items-center gap-2 mb-4'>
-                    In Progress <span className='w-[20px] h-[20px] text-center rounded-full text-[12px] p-[1px] bg-sky-200 text-sky-500'>{filteredTasks.length}</span>
-                </h1>
+            {/* In progress tasks */}
+            <Box width="30%" px={2}>
+                <Typography variant="h5" gutterBottom>
+                    In Progress <span style={{ padding: '2px 8px', borderRadius: '12px', backgroundColor: '#bbdefb' }}>{filteredTasks.length}</span>
+                </Typography>
                 {filteredTasks.length > 0 ? (
-                    <div className='flex flex-col gap-4'>
-                        <ul className='flex flex-col flex-wrap gap-4'>
-                            {filteredTasks.map((task) => (
-                                <li key={task.id}>
-                                    <Card className='w-full bg-white'>
-                                        <div className='flex justify-between items-center border py-2 px-4'>
-                                            <div className='text-lg font-bold'>Task {task.id}</div>
-                                            <Button
-                                                onClick={() => markAsCompleted(task.id)}
-                                                className='border flex gap-2 items-center  bg-blue-500 text-white'
-                                            >
-                                                <IoMdCheckmark /> Done
-                                            </Button>
-                                        </div>
-                                        <div className='flex flex-col gap-2 p-4'>
-                                            <CardTitle className='text-lg font-semibold'>{task.title}</CardTitle>
-                                            <CardDescription className='text-sm font-normal text-gray-500'>{task.description}</CardDescription>
-                                        </div>
-                                    </Card>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ) : (
-                    null
-                )}
-            </div>
+                    <Grid container spacing={2}>
+                        {filteredTasks.map((task) => (
+                            <Grid item xs={6} key={task.id}>
+                                <Card elevation={3}>
+                                    <CardContent>
+                                        <Typography variant="h6">Task {task.id}</Typography>
+                                        <Typography variant="body2" color="textSecondary">{task.title}</Typography>
+                                        <Typography variant="body2" color="textSecondary">{task.description}</Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button variant="contained" color="primary" startIcon={<IoMdCheckmark />} onClick={() => markAsCompleted(task.id)}>
+                                            Done
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                ) : null}
+            </Box>
 
             {/* Completed tasks */}
-            <div className='w-[30%] px-4'>
-                <h1 className='font-bold flex items-center gap-2 mb-4'>
-                    Completed Tasks <span className='w-[20px] h-[20px] text-center rounded-full text-[12px] p-[1px] bg-green-500 text-white'>{completedTasks.length}</span>
-                </h1>
+            <Box width="30%" px={2}>
+                <Typography variant="h5" gutterBottom>
+                    Completed Tasks <span style={{ padding: '2px 8px', borderRadius: '12px', backgroundColor: '#a5d6a7' }}>{completedTasks.length}</span>
+                </Typography>
                 {completedTasks.length > 0 ? (
-                    <div className='flex flex-col gap-4'>
-                        <ul className='flex flex-col flex-wrap gap-4'>
-                            {completedTasks.map((task) => (
-                                <li key={task.id}>
-                                    <Card className='w-full bg-white'>
-                                        <div className='flex justify-center items-center border py-2 px-4'>
-                                            <h2 className='text-lg text-center font-bold'>Task {task.id}</h2>
-                                        </div>
-                                        <div className='flex flex-col gap-2 p-4'>
-                                            <CardTitle className='text-lg font-semibold'>{task.title}</CardTitle>
-                                            <CardDescription className='text-sm font-normal text-gray-500'>{task.description}</CardDescription>
-                                        </div>
-                                    </Card>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ) : (
-                    null
-                )}
-            </div>
-        </div>
+                    <Grid container spacing={2}>
+                        {completedTasks.map((task) => (
+                            <Grid item xs={6} key={task.id}>
+                                <Card elevation={3}>
+                                    <CardContent>
+                                        <Typography variant="h6">Task {task.id}</Typography>
+                                        <Typography variant="body2" color="textSecondary">{task.title}</Typography>
+                                        <Typography variant="body2" color="textSecondary">{task.description}</Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                ) : null}
+            </Box>
+        </Box>
     );
 };
 
