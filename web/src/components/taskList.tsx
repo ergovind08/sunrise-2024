@@ -3,7 +3,8 @@ import Task from '@/model/Task';
 import { Card, CardContent, CardActions, Typography, Box, Button, Grid } from '@mui/material';
 import { IoMdCheckmark } from "react-icons/io";
 import { AiOutlineClockCircle } from "react-icons/ai"; // Upcoming icon
-import Lottie from 'react-lottie';
+
+
 import firecrackerAnimation from '@/animations/animation.json'; // Import your firecracker animation file
 
 const TaskList: React.FC = () => {
@@ -151,7 +152,7 @@ const TaskList: React.FC = () => {
                             Hurray! You have completed all tasks!
                         </Typography>
                         <Box mt={2}>
-                            <Lottie
+                            {/* <Lottie
                                 options={{
                                     loop: true,
                                     autoplay: true,
@@ -162,7 +163,7 @@ const TaskList: React.FC = () => {
                                 }}
                                 height={200}
                                 width={200}
-                            />
+                            /> */}
                         </Box>
                     </Box>
                 ) : (
